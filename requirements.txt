@@ -45,6 +45,7 @@ openai
 openapi-schema-pydantic
 orjson==3.9.4
 pandas
+pandasai
 Pillow==9.5.0
 platformdirs==3.10.0
 prompt-toolkit==3.0.39
