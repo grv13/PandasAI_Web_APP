@@ -57,7 +57,6 @@ sentence-transformers
 tokenizers
 toml==0.10.2
 urllib3==1.26.15
-vboxapi==1.0
 webencodings==0.5.1
 websockets==11.0.3
 widgetsnbextension==4.0.8
