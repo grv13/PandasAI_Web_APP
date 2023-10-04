@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        /* Add your CSS styles here for the chat interface */
+        /* Example styles for a simple chat interface */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .chat-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .chat-messages {
+            list-style: none;
+            padding: 0;
+        }
+        .message {
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .user-message {
+            background-color: #2196F3;
+            color: white;
+            text-align: right;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Chatbot</h2>
+        <ul class="chat-messages" id="chat-messages">
+            <!-- Chat messages will appear here -->
+        </ul>
+        <input type="text" id="user-input" placeholder="Type a message...">
+    </div>
+
+    <script>
+        function addMessage(message, sender) {
+            const chatMessages = document.getElementById("chat-messages");
+            const messageElement = document.createElement("li");
+
+            messageElement.classList.add("message");
+
+            if (sender === 'user') {
+                messageElement.classList.add("user-message");
+            }
+            if (sender === 'bot') {
+                messageElement.classList.add("user-message");
+            }
+
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+        }
+
+
+        document.getElementById("user-input").addEventListener("keypress", function (event) {
+        if (event.key === 'Enter') {
+        const userInput = document.getElementById("user-input").value;
+        //console.log('userInput ->' + userInput)
+        addMessage(userInput, 'user');
+
+        // Send the user message to Flask for processing using LangChain
+        fetch('/process_message', {
+            method: 'POST',
+            body: JSON.stringify({ message: userInput }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+        // Handle the response from Flask (bot's message)
+        addMessage(data.bot_response, 'bot');
+        })
+
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        // Clear the user input field
+        document.getElementById("user-input").value = '';
+        }
+});
+
+    </script>
+</body>
+</html>
