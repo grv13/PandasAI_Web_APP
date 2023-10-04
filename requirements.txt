@@ -54,11 +54,11 @@ python-dotenv
 PyYAML
 requests==2.29.0
 sentence-transformers
-tiktoken==0.3.3
-tokenizers==0.13.3
+tiktoken
+tokenizers
 toml==0.10.2
 urllib3==1.26.15
-uvicorn==0.23.2
+uvicorn
 validators==0.21.0
 vboxapi==1.0
 webencodings==0.5.1
